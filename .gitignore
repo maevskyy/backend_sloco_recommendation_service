@@ -10,4 +10,6 @@ coverage
 htmlcov
 *.log
 .DS_Store
-
+.poetry-cache
+.poetry-config
+poetry.toml

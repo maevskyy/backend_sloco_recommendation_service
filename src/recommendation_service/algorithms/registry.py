@@ -9,11 +9,13 @@ class AlgorithmDescriptor:
 
 class AlgorithmRegistry:
     def __init__(self) -> None:
-        self._algorithms: list[AlgorithmDescriptor] = []
+        self._algorithms: dict[str, AlgorithmDescriptor] = {}
+
+    def register(self, descriptor: AlgorithmDescriptor) -> None:
+        self._algorithms[descriptor.name] = descriptor
 
     def list_algorithms(self) -> list[AlgorithmDescriptor]:
-        return list(self._algorithms)
+        return sorted(self._algorithms.values(), key=lambda item: item.name)
 
 
 registry = AlgorithmRegistry()
-

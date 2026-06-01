@@ -1,7 +1,12 @@
 from fastapi import APIRouter
 
+from recommendation_service.algorithms.registry import registry
 from recommendation_service.config import get_settings
-from recommendation_service.health.schemas import HealthResponse, MetaResponse
+from recommendation_service.health.schemas import (
+    AlgorithmMeta,
+    HealthResponse,
+    MetaResponse,
+)
 
 router = APIRouter(tags=["health"])
 
@@ -33,6 +38,8 @@ async def meta() -> MetaResponse:
         service=settings.service_name,
         environment=settings.app_env,
         version="0.1.0",
-        algorithms=[],
+        algorithms=[
+            AlgorithmMeta(name=item.name, version=item.version)
+            for item in registry.list_algorithms()
+        ],
     )
-

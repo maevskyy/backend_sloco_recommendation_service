@@ -34,6 +34,7 @@ RUN addgroup --system app \
     && adduser --system --ingroup app app
 
 COPY --from=deps /app/.venv ./.venv
+COPY artifacts ./artifacts
 COPY src ./src
 COPY pyproject.toml poetry.lock* README.md ./
 
