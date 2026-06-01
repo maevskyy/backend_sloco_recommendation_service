@@ -103,7 +103,7 @@ jobs:
             docker image prune -f
 
             for attempt in $(seq 1 12); do
-              if curl --fail --silent --show-error http://127.0.0.1:8000/v1/health; then
+              if docker compose exec -T recommendation-service python -c "import sys, urllib.request; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/v1/health/ready', timeout=3).status == 200 else 1)"; then
                 exit 0
               fi
 
